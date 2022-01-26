@@ -1,3 +1,4 @@
+import { ADD_TO_CART, REMOVE_FROM_CART, SET_USERNAME } from '../actions'
 import { initialState } from '../store'
 
 // the reducer is a pure function, no side-effects and with the same input
@@ -6,7 +7,7 @@ import { initialState } from '../store'
 const mainReducer = (state = initialState, action) => {
   // action is an object!
   switch (action.type) {
-    case 'ADD_TO_CART':
+    case ADD_TO_CART:
       return {
         // action.payload is the book we want to add!
         ...state,
@@ -21,7 +22,7 @@ const mainReducer = (state = initialState, action) => {
         },
       }
 
-    case 'REMOVE_FROM_CART':
+    case REMOVE_FROM_CART:
       return {
         ...state,
         cart: {
@@ -29,6 +30,15 @@ const mainReducer = (state = initialState, action) => {
           products: state.cart.products.filter((book, i) => i !== action.payload),
           // products: [...state.cart.products.slice(0, action.payload), ...state.cart.products.slice(action.payload + 1)], // <-- THIS ALSO WORKS :)
           // obv methods that mutate the original array (like .splice()) must not be used :(
+        },
+      }
+
+    case SET_USERNAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          username: action.payload,
         },
       }
 

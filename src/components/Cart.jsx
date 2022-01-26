@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import { FaTrash } from "react-icons/fa";
 import { Col, Row } from "react-bootstrap";
 import { connect } from 'react-redux'
+import { removeFromCartAction } from "../redux/actions";
 
 // for providing read access (for the products array) let's create mapStateToProps
 const mapStateToProps = (state) => ({
@@ -11,10 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   removeFromCart: (index) => {
     console.log('index is', index)
-    dispatch({
-      type: 'REMOVE_FROM_CART',
-      payload: index
-    })
+    dispatch(removeFromCartAction(index))
   }
 })
 

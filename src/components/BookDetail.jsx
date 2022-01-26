@@ -2,16 +2,16 @@ import { Component } from "react";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { connect } from 'react-redux'
+import { addToCartAction } from "../redux/actions";
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  username: state.user.username
+})
 
 const mapDispatchToProps = (dispatch) => ({
   addToCart: (book) => {
     // book is the book object, with price, title, description
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: book
-    })
+    dispatch(addToCartAction(book))
   },
 })
 
@@ -57,11 +57,17 @@ class BookDetail extends Component {
                   <span className="font-weight-bold">Price:</span>
                   {this.state.book.price}
                 </p>
-                <Button color="primary" onClick={() => {
-                  this.props.addToCart(this.state.book)
-                }}>
-                  ADD TO CART
-                </Button>
+                {
+                  this.props.username ? (
+                    <Button color="primary" onClick={() => {
+                      this.props.addToCart(this.state.book)
+                    }}>
+                      ADD TO CART
+                    </Button>
+                  ) : (
+                    <div>Please log in to purchase this book</div>
+                  )
+                }
               </Col>
             </Row>
           </>
