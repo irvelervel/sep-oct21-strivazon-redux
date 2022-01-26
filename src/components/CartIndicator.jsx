@@ -6,20 +6,30 @@ import { connect } from 'react-redux'
 // a HIGHER ORDER COMPONENT, with the same capabilities as before and more...
 // tipically a HIGHER ORDER COMPONENT has MORE PROPS than before!
 
-const CartIndicator = () => {
+const mapStateToProps = (state) => ({
+  // every property of the object we return from mapStateToProps
+  // is going to be a new prop for this component
+  // we want to read the length of the cart, more specifically cart.products
+  cartLength: state.cart.products.length
+  // ...state // doing this you're providing your component with all the redux
+  // store properties, this may work but it's kind of overkill
+  // try to taylor down the exact props/values your component is in need of
+})
+
+const CartIndicator = ({ cartLength }) => {
   const navigate = useNavigate()
 
   return (
     <div className="ml-auto mt-2">
       <Button color="primary" onClick={() => navigate("/cart")}>
         <FaShoppingCart />
-        <span className="ml-2">0</span>
+        <span className="ml-2">{cartLength}</span>
       </Button>
     </div>
   )
 }
 
-export default connect()(CartIndicator)
+export default connect(mapStateToProps)(CartIndicator)
 // connect can take up to 2 arguments:
 // at least it should receive mapStateToProps
 // if we provide mapStateToProps, CartIndicator will be able to READ
